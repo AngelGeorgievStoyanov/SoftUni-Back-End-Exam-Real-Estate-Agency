@@ -1,0 +1,57 @@
+<section id="deatils-page">
+    <div class="wrapper">
+        <div class="product-img">
+            <img src="{{house.imageUrl}}">
+        </div>
+        <div class="product-info">
+            <div class="product-text">
+                <div class="product-text">
+                    <h1>Name: {{house.name}}</h1>
+                    <h2>Type: {{house.type}}</h2>
+                    <h4>Year: {{house.year}}</h4>
+                    <h4>City: {{house.city}}</h4>
+                    <p>Description: {{house.description}}</p>
+                    {{#if house.bookeds}}
+                    <!-- if there are already tenants of the housing, separate their names with a comma and a space ", "  -->
+                    <p>People rented this housing: {{allUsers}}</p>
+                    {{else}}
+                    <!-- If not display: -->
+                    <p>People rented this housing: There are no tenants yet.</p>
+
+                    {{/if}}
+                </div>
+            </div>
+
+
+            {{#if isuser}}
+            <!-- if there is no registered user, do not display buttons-->
+            <div class="product-btn">
+                {{#if isowner}}
+                <!-- Only for registered user and creator of the housing offer-->
+                <a href="/products/edit/{{house._id}}" class="edit">Edit</a>
+                <a href="/products/delete/{{house._id}}" class="remove">Delete</a>
+                {{else}}
+                <!-- logged in user with available pieces-->
+
+                {{#if house.rooms}}
+
+
+                {{#if userBooked }}
+                <a class="rentHome">Rent a home, available {{house.rooms}} housing</a>
+                <p class="alRentHome">You have already rent this home</p>
+                {{else}}
+                <a href="/products/book/{{house._id}}" class="rentHome">Rent a home, available {{house.rooms}}
+                    housing</a>
+
+                {{/if}}
+                {{else}}
+
+                <!-- logged in user with no available pieces-->
+                <p class="no-housing">No Housing Available!</p>
+                {{/if}}
+                {{/if}}
+            </div>
+            {{/if}}
+        </div>
+     
+</section>

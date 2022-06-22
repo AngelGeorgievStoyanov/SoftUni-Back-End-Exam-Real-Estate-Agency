@@ -8,10 +8,10 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const houses = await req.storage.getAll(req.query);
-   
+
 
     const lastTreeHouse = houses.reverse().slice(0, 3)
-   
+
     const ctx = {
         title: 'House',
         houses,
@@ -90,7 +90,7 @@ router.get('/details/:id', preloadHouse(), async (req, res) => {
 
         }
 
-      
+
 
         let arr = house.bookeds;
 
@@ -183,7 +183,7 @@ router.get('/search', (req, res) => {
 router.post('/search', async (req, res) => {
 
     const houses = await req.storage.getHotelByName(req.body.name)
-   
+
     const ctx = {
         title: 'Houses',
         houses
@@ -206,6 +206,31 @@ router.get('/forrent', async (req, res) => {
 
     res.render('forrent', ctx);
 });
+
+router.get('/book/:id', preloadHouse(), async (req, res) => {
+
+    const house = req.data.house;
+
+    house.rooms--;
+
+    const userId = req.user._id;
+
+    house.bookeds.push(userId)
+    const ctx = {
+        title: 'House',
+        house,
+    }
+
+    try {
+        await req.storage.attachBooked(house._id, house)
+    } catch (err) {
+
+        error = err.message
+
+    }
+
+    res.redirect(`/products/details/${house._id}`)
+})
 
 
 

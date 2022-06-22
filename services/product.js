@@ -47,7 +47,7 @@ async function getById(id) {
 async function create(house) {
     const record = new House(house);
 
-
+    
     await record.save();
     return record;
 
@@ -98,13 +98,13 @@ async function getHotelByName(name) {
 }
 
 async function getUsersById(x) {
-  
 
-    const user =await User.findById(x).lean()
-  
-   return   user
 
-  
+    const user = await User.findById(x).lean()
+
+    return user
+
+
 }
 
 module.exports = {
